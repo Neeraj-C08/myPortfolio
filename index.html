@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Neeraj Chandekar – Electrical Engineering Portfolio</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+<nav aria-label="Sections">
+  <a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#about">About</a>
+  <button id="theme" type="button" aria-label="Toggle light or dark theme">Theme</button>
+</nav>
+
+<header>
+  <h1>Neeraj Chandekar</h1>
+  <p class="tag">Electrical engineering student at Cal Poly San Luis Obispo, designing PCBs, autonomous vehicle electronics, and semiconductor devices.</p>
+  <div class="links" id="contact"></div>
+  <svg class="traces" viewBox="0 0 800 70" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M0 35H150L180 12H330L360 35H470L500 58H640L670 35H800"/>
+    <path d="M0 58H90L110 46H240" opacity=".5"/>
+    <path d="M520 12H800" opacity=".5"/>
+    <circle cx="150" cy="35" r="6" fill="var(--bg)"/><circle cx="360" cy="35" r="6" fill="var(--bg)"/><circle cx="640" cy="58" r="6" fill="var(--bg)"/>
+  </svg>
+</header>
+
+<!-- ================= PROJECTS: add new ones to this list =================
+Copy one block, paste it at the TOP of the list, and edit. Fields:
+  title, org (lab/club/class), date (text), tags (list), summary (one line),
+  bullets (list), links (optional: [{label, url}]), image (optional: URL of a picture)
+-->
+<section id="projects">
+  <h2>Projects</h2>
+  <div class="filters" id="filters"></div>
+  <div id="projectList"></div>
+</section>
+
+<section id="experience">
+  <h2>Experience</h2>
+  <div id="expList"></div>
+</section>
+
+<section id="skills" class="skills">
+  <h2>Skills</h2>
+  <dl id="skillList"></dl>
+</section>
+
+<section id="about">
+  <h2>About</h2>
+  <div id="aboutText"></div>
+  <h2 style="margin-top:34px">Honors and awards</h2>
+  <ul class="awards" id="awardList"></ul>
+</section>
+
+<footer>© <span id="yr"></span> Neeraj Chandekar. Built with plain HTML.</footer>
+</div>
+
+<script>
+/* ===================== EDIT THIS SECTION ===================== */
+const PROFILE = {
+  email: "nchandek@calpoly.edu",
+  links: [
+    {label: "LinkedIn", url: "https://linkedin.com/in/neeraj-chandekar-82a1b1238"},
+    {label: "GitHub", url: "https://github.com/Neeraj-C08"}
+  ],
+  about: [
+    "I am a first-year Electrical Engineering student at Cal Poly San Luis Obispo (B.S., expected May 2030). I like work where hardware and software meet: circuit boards, sensors, communication buses, and the code that runs on them.",
+    "Before college I founded and captained an FTC robotics team for three years, taught Python and JavaScript to kids as a coding coach, and led AI-safety outreach with local nonprofits."
+  ]
+};
+
+// Newest first. Copy a block, paste at the top, and edit.
+const PROJECTS = [
+  {
+    title: "Cooling Fan Control Breakout Board",
+    org: "Cal Poly Formula SAE",
+    date: "Oct 2026",
+    tags: ["PCB design", "Altium", "Analog"],
+    summary: "Two-layer PCB that conditions a PWM signal for the car’s cooling fans.",
+    bullets: [
+      "Laid out components and routed copper in Altium Designer. The board receives a PWM signal from the LVM, filters it, and passes it to the next set of cooling fans.",
+      "Verified the signal filtering at 100 kHz in LTspice using a Bode plot."
+    ],
+    links: [],
+    image: ""
+  },
+  {
+    title: "MOS Capacitor Research",
+    org: "Cal Poly Micro Systems Technology Group (MST)",
+    date: "Sept 2026 – present",
+    tags: ["Research", "Semiconductors", "Modeling"],
+    summary: "Fabricating and testing a MOS capacitor in the campus MicroFabrication Laboratory.",
+    bullets: [
+      "Developing a mathematical model of the capacitance-voltage (C-V) relationship to benchmark against measurements once physical testing begins."
+    ],
+    links: [],
+    image: ""
+  },
+  {
+    title: "Autonomy Electronics Integration Plan",
+    org: "Cal Poly Prototype Vehicles Laboratory",
+    date: "Aug 2026 – present",
+    tags: ["Systems", "Autonomy", "Embedded"],
+    summary: "Electronics integration plan for an autonomous vehicle.",
+    bullets: [
+      "Integrated devices include the NVIDIA Jetson AGX Orin compute module, three automotive RGB cameras, and an Ouster LiDAR sensor.",
+      "Produced a complete block diagram and documented all interconnects and protocols: GMSL2 camera links, a 10G Ethernet LiDAR interface, and a CAN 2.0B vehicle bus."
+    ],
+    links: [],
+    image: ""
+  }
+  // ← paste new projects above this line
+];
+
+const EXPERIENCE = [
+  {role: "Head of Outreach / Developer", org: "ThrAIve AI", date: "Oct 2024 – May 2026", bullets: [
+    "Connected with 5–10 nonprofits each year to host educational webinars on AI safety.",
+    "Helped build a Flask flier-generation web app for outreach and fundraising for HART of Folsom, a local homeless assistance service."]},
+  {role: "Code Coach", org: "theCoderSchool Folsom", date: "June 2025 – Feb 2026", bullets: [
+    "Guided 10–15 students weekly through Python, JavaScript, and Scratch projects.",
+    "Tracked individual progress and delivered detailed project reviews."]},
+  {role: "Founder and Captain", org: "Reboot FTC Robotics Team", date: "Sept 2022 – Sept 2025", bullets: [
+    "Led hardware and software integration: sensors, encoders, and control software for autonomous operation.",
+    "Designed, programmed (Java), and built a competition robot each season. Earned the Inspire Award and a Finalist Alliance selection.",
+    "Secured $6,000+ in sponsorships and grants and launched a mentorship program for younger students."]},
+  {role: "User Interface Intern", org: "ActivityBees", date: "June 2023 – Aug 2023", bullets: [
+    "Reviewed a startup app’s UI and documented key improvements for the lead developer.",
+    "Implemented UI changes under mentorship."]}
+];
+
+const SKILLS = {
+  "Design tools": "Altium Designer (schematic capture, PCB layout), Autodesk Fusion 360 (certified), LTspice, Arduino IDE",
+  "Programming": "Python, Arduino C++, Java",
+  "Lab equipment": "Multimeter, oscilloscope, function generator"
+};
+
+const AWARDS = [
+  "AP Scholar with Distinction",
+  "Finalist Alliance and Inspire Award (highest honor), FTC CA Northeast League Championship, 2025",
+  "Think Award, FTC CA Northeast League Championship, 2024",
+  "Bronze Medalist, SkillsUSA CA Cybersecurity Competition, 2025"
+];
+/* =================== END EDITABLE SECTION =================== */
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const safeUrl = u => /^https?:\/\//.test(u) ? u : "#";
+
+$("contact").innerHTML =
+  `<a href="mailto:${esc(PROFILE.email)}">${esc(PROFILE.email)}</a>` +
+  PROFILE.links.map(l => `<a href="${safeUrl(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join("");
+$("aboutText").innerHTML = PROFILE.about.map(p => `<p>${esc(p)}</p>`).join("");
+$("skillList").innerHTML = Object.entries(SKILLS).map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
+$("awardList").innerHTML = AWARDS.map(a => `<li>${esc(a)}</li>`).join("");
+$("expList").innerHTML = EXPERIENCE.map(e => `
+  <article class="job"><div class="meta">${esc(e.date)}</div><div>
+  <h3>${esc(e.role)}</h3><p class="org">${esc(e.org)}</p>
+  <ul>${e.bullets.map(b => `<li>${esc(b)}</li>`).join("")}</ul></div></article>`).join("");
+$("yr").textContent = new Date().getFullYear();
+
+let active = "All";
+function renderProjects() {
+  const list = PROJECTS.filter(p => active === "All" || p.tags.includes(active));
+  $("projectList").innerHTML = list.map(p => `
+    <article class="project"><div class="meta">${esc(p.date)}</div><div>
+    <h3>${esc(p.title)}</h3><p class="org">${esc(p.org)}</p>
+    <p style="margin:0">${esc(p.summary)}</p>
+    <ul>${p.bullets.map(b => `<li>${esc(b)}</li>`).join("")}</ul>
+    ${p.image ? `<img src="${safeUrl(p.image)}" alt="${esc(p.title)}">` : ""}
+    <div class="chips">${p.tags.map(t => `<span>${esc(t)}</span>`).join("")}</div>
+    ${(p.links || []).length ? `<p style="margin:12px 0 0">${p.links.map(l => `<a href="${safeUrl(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join(" &nbsp; ")}</p>` : ""}
+    </div></article>`).join("");
+}
+function renderFilters() {
+  const tags = ["All", ...new Set(PROJECTS.flatMap(p => p.tags))];
+  $("filters").innerHTML = tags.map(t => `<button type="button" aria-pressed="${t === active}" data-t="${esc(t)}">${esc(t)}</button>`).join("");
+  $("filters").querySelectorAll("button").forEach(b => b.onclick = () => { active = b.dataset.t; renderFilters(); renderProjects(); });
+}
+renderFilters(); renderProjects();
+
+$("theme").onclick = () => {
+  const r = document.documentElement;
+  const dark = r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  r.dataset.theme = dark ? "light" : "dark";
+};
+</script>
+</body>
+</html>
