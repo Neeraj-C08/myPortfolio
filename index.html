@@ -1,164 +1,178 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Neeraj Chandekar – Electrical Engineering Portfolio</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Selected electrical engineering work by Neeraj Chandekar: circuit boards, autonomous vehicle electronics, and semiconductor research at Cal Poly.">
+  <meta name="theme-color" content="#f6f5f0">
+  <title>Neeraj Chandekar — Electrical Engineering</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="wrap">
-<nav aria-label="Sections">
-  <a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#about">About</a>
-  <button id="theme" type="button" aria-label="Toggle light or dark theme">Theme</button>
-</nav>
-
-<header>
-  <h1>Neeraj Chandekar</h1>
-  <p class="tag">Electrical engineering student at Cal Poly San Luis Obispo, designing PCBs, autonomous vehicle electronics, and semiconductor devices.</p>
-  <div class="links" id="contact"></div>
-  <svg class="traces" viewBox="0 0 800 70" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M0 35H150L180 12H330L360 35H470L500 58H640L670 35H800"/>
-    <path d="M0 58H90L110 46H240" opacity=".5"/>
-    <path d="M520 12H800" opacity=".5"/>
-    <circle cx="150" cy="35" r="6" fill="var(--bg)"/><circle cx="360" cy="35" r="6" fill="var(--bg)"/><circle cx="640" cy="58" r="6" fill="var(--bg)"/>
-  </svg>
-</header>
-
-<!-- ================= PROJECTS: add new ones to this list =================
-Copy one block, paste it at the TOP of the list, and edit. Fields:
-  title, org (lab/club/class), date (text), tags (list), summary (one line),
-  bullets (list), links (optional: [{label, url}]),
-  images (optional: [{src, caption}] — put picture files in the images/ folder, e.g. src: "images/my-pic.png")
--->
-<section id="projects">
-  <h2>Projects</h2>
-  <div class="filters" id="filters"></div>
-  <div id="projectList"></div>
-</section>
-
-<section id="skills" class="skills">
-  <h2>Skills</h2>
-  <dl id="skillList"></dl>
-</section>
-
-<section id="about">
-  <h2>About</h2>
-  <div id="aboutText"></div>
-</section>
-
-<footer>© <span id="yr"></span> Neeraj Chandekar</footer>
-</div>
-
-<script>
-/* ===================== EDIT THIS SECTION ===================== */
-const PROFILE = {
-  email: "nchandek@calpoly.edu",
-  links: [
-    {label: "LinkedIn", url: "https://linkedin.com/in/neeraj-chandekar-82a1b1238"},
-    {label: "GitHub", url: "https://github.com/Neeraj-C08"}
-  ],
-  about: [
-    "I am a first-year Electrical Engineering student at Cal Poly San Luis Obispo (B.S., expected May 2030). I like work where hardware and software meet: circuit boards, sensors, communication buses, and the code that runs on them.",
-    "Before college I founded and captained an FTC robotics team for three years, taught Python and JavaScript to kids as a coding coach, and led AI-safety outreach with local nonprofits."
-  ]
-};
-
-// Newest first. Copy a block, paste at the top, and edit.
-const PROJECTS = [
-  {
-    title: "Cooling Fan Control Breakout Board",
-    org: "Cal Poly Formula SAE",
-    date: "Oct 2026",
-    tags: ["PCB design", "Altium", "Analog"],
-    summary: "Two-layer PCB that conditions a PWM signal for the car’s cooling fans.",
-    bullets: [
-      "Laid out components and routed copper in Altium Designer. The board receives a PWM signal from the LVM, filters it, and passes it to the next set of cooling fans.",
-      "Verified the signal filtering at 100 kHz in LTspice using a Bode plot."
-    ],
-    links: [],
-    images: [
-      {src: "images/Screenshot 2026-11-11 212728.png", caption: "PCB layout (Altium Designer)"},
-      {src: "images/Screenshot 2026-11-11 212849.png", caption: "Schematic"}
-    ]
-  },
-  {
-    title: "MOS Capacitor Research",
-    org: "Cal Poly Micro Systems Technology Group (MST)",
-    date: "Sept 2026 – present",
-    tags: ["Research", "Semiconductors", "Modeling"],
-    summary: "Fabricating and testing a MOS capacitor in the campus MicroFabrication Laboratory.",
-    bullets: [
-      "Developing a mathematical model of the capacitance-voltage (C-V) relationship to benchmark against measurements once physical testing begins."
-    ],
-    links: [],
-    images: []
-  },
-  {
-    title: "Autonomy Electronics Integration Plan",
-    org: "Cal Poly Prototype Vehicles Laboratory",
-    date: "Aug 2026 – present",
-    tags: ["Systems", "Autonomy", "Embedded"],
-    summary: "Electronics integration plan for an autonomous vehicle.",
-    bullets: [
-      "Integrated devices include the NVIDIA Jetson AGX Orin compute module, three automotive RGB cameras, and an Ouster LiDAR sensor.",
-      "Produced a complete block diagram and documented all interconnects and protocols: GMSL2 camera links, a 10G Ethernet LiDAR interface, and a CAN 2.0B vehicle bus."
-    ],
-    links: [],
-    images: []
-  }
-  // ← paste new projects above this line
-];
-
-const SKILLS = {
-  "Design tools": "Altium Designer (schematic capture, PCB layout), Autodesk Fusion 360 (certified), LTspice, Arduino IDE",
-  "Programming": "Python, Arduino C++, Java",
-  "Lab equipment": "Multimeter, oscilloscope, function generator"
-};
-
-/* =================== END EDITABLE SECTION =================== */
-
-const $ = id => document.getElementById(id);
-const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const safeUrl = u => /^(https?:\/\/|images\/)/.test(u) ? u : "#";
-
-$("contact").innerHTML =
-  `<a href="mailto:${esc(PROFILE.email)}">${esc(PROFILE.email)}</a>` +
-  PROFILE.links.map(l => `<a href="${safeUrl(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join("");
-$("aboutText").innerHTML = PROFILE.about.map(p => `<p>${esc(p)}</p>`).join("");
-$("skillList").innerHTML = Object.entries(SKILLS).map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
-$("yr").textContent = new Date().getFullYear();
-
-let active = "All";
-function renderProjects() {
-  const list = PROJECTS.filter(p => active === "All" || p.tags.includes(active));
-  $("projectList").innerHTML = list.map(p => `
-    <article class="project">
-      <div class="head">
-        <div><h3>${esc(p.title)}</h3><p class="org">${esc(p.org)}</p></div>
-        <div class="meta">${esc(p.date)}</div>
-      </div>
-      <p class="summary">${esc(p.summary)}</p>
-      <ul>${p.bullets.map(b => `<li>${esc(b)}</li>`).join("")}</ul>
-      ${(p.images || []).length ? `<div class="gallery">${p.images.map(i => `
-        <figure><a href="${safeUrl(i.src)}" target="_blank" rel="noopener"><img src="${safeUrl(i.src)}" alt="${esc(i.caption || p.title)}" loading="lazy"></a>
-        <figcaption>${esc(i.caption || "")}</figcaption></figure>`).join("")}</div>` : ""}
-      <div class="chips">${p.tags.map(t => `<span>${esc(t)}</span>`).join("")}</div>
-      ${(p.links || []).length ? `<p class="plinks">${p.links.map(l => `<a href="${safeUrl(l.url)}" target="_blank" rel="noopener">${esc(l.label)} →</a>`).join("")}</p>` : ""}
-    </article>`).join("");
-}
-function renderFilters() {
-  const tags = ["All", ...new Set(PROJECTS.flatMap(p => p.tags))];
-  $("filters").innerHTML = tags.map(t => `<button type="button" aria-pressed="${t === active}" data-t="${esc(t)}">${esc(t)}</button>`).join("");
-  $("filters").querySelectorAll("button").forEach(b => b.onclick = () => { active = b.dataset.t; renderFilters(); renderProjects(); });
-}
-renderFilters(); renderProjects();
-
-$("theme").onclick = () => {
-  const r = document.documentElement;
-  const dark = r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
-  r.dataset.theme = dark ? "light" : "dark";
-};
-</script>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="wrap">
+    <nav aria-label="Main navigation">
+      <a class="wordmark" href="#">NC<span aria-hidden="true">.</span></a>
+      <div class="nav-links"><a href="#projects">Selected work</a><a href="#about">About</a><a href="mailto:nchandek@calpoly.edu">Get in touch <span aria-hidden="true">↗</span></a></div>
+      <button id="theme" type="button" aria-label="Toggle light or dark theme">Theme <span aria-hidden="true">◐</span></button>
+    </nav>
+    <main id="main">
+      <header class="intro">
+        <div class="intro-copy">
+          <p class="eyebrow">Electrical engineering / Cal Poly San Luis Obispo</p>
+          <h1>Neeraj<br>Chandekar</h1>
+          <p>I’m an electrical engineering student working on circuit boards, autonomous vehicle electronics, and semiconductor devices.</p>
+          <a class="text-link" href="#projects">Selected work <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="portrait"><img src="images/IMG_0150.JPG" alt="Neeraj Chandekar" width="1067" height="1600" fetchpriority="high"></div>
+      </header>
+      <section id="projects" aria-labelledby="work-title">
+        <div class="section-heading"><h2 id="work-title">Selected work</h2><span>01 — 03 / 2026</span></div>
+        <!-- Add future projects as .project articles in this list to keep their widths consistent. -->
+        <div class="project-list">
+        <article class="project" aria-labelledby="fan-title">
+          <div class="board-visual">
+            <div class="visual-label"><span>01 / Circuit design</span><span>Altium Designer</span></div>
+            <!-- Add image figures here; carousel controls are generated automatically. -->
+            <div class="carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Cooling Fan Control Breakout Board images">
+              <div class="carousel-stage">
+                <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="1 of 2: PCB layout">
+                  <a href="images/Screenshot%202026-11-11%20212728.png" target="_blank" rel="noopener" aria-label="Open full-size PCB layout in a new tab"><img src="images/Screenshot%202026-11-11%20212728.png" alt="Cooling fan breakout PCB layout showing routed traces, connectors, and mounting holes" width="736" height="736"></a>
+                  <figcaption>PCB layout <span>↗ View full size</span></figcaption>
+                </figure>
+                <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="2 of 2: Schematic">
+                  <a href="images/Screenshot%202026-11-11%20212849.png" target="_blank" rel="noopener" aria-label="Open full-size schematic in a new tab"><img src="images/Screenshot%202026-11-11%20212849.png" alt="Cooling fan signal-conditioning schematic with op-amps, filter components, and fan connectors" width="1020" height="807" loading="lazy"></a>
+                  <figcaption>Schematic <span>↗ View full size</span></figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+          <div class="project-copy">
+            <h3 id="fan-title">Cooling Fan Control Breakout Board</h3>
+            <p class="eyebrow">Cal Poly Formula SAE · Oct 2026</p>
+            <p>I designed and routed a two-layer PCB in Altium to condition the car’s cooling-fan PWM signal, from the LVM to the next set of fans.</p>
+            <div class="project-impact"><h4>Why it matters</h4><p>Cooling control depends on the signal reaching the fans as intended. I checked the filtering at 100 kHz in LTspice using a Bode plot.</p></div>
+            <div class="chips" aria-label="Technologies"><span>PCB design</span><span>Altium</span><span>LTspice</span></div>
+          </div>
+        </article>
+          <article class="project" aria-labelledby="autonomy-title">
+            <div class="diagram-visual autonomy-visual">
+              <div class="visual-label"><span>02 / Systems integration</span><span>In progress</span></div>
+              <div class="system-diagram" role="img" aria-label="Planned vehicle connections: three RGB cameras via GMSL2, Ouster LiDAR via 10G Ethernet, and the vehicle bus via CAN 2.0B, connected to NVIDIA Jetson AGX Orin compute.">
+                <div class="system-node compute"><small>COMPUTE</small>NVIDIA Jetson AGX Orin</div>
+                <div class="system-branches">
+                  <div><span class="protocol">GMSL2</span><span class="system-node">3 × RGB cameras</span></div>
+                  <div><span class="protocol">10G Ethernet</span><span class="system-node">Ouster LiDAR</span></div>
+                  <div><span class="protocol">CAN 2.0B</span><span class="system-node">Vehicle bus</span></div>
+                </div>
+              </div>
+              <p class="visual-caption">System overview <span>Concept diagram</span></p>
+            </div>
+            <div class="project-copy">
+              <h3 id="autonomy-title">Autonomy Electronics Integration Plan</h3>
+              <p class="eyebrow">Prototype Vehicles Laboratory · Aug 2026–present</p>
+              <p>I produced a block diagram and documented the interconnects and protocols linking the vehicle’s compute, cameras, LiDAR, and vehicle bus.</p>
+              <div class="project-impact"><h4>Why it matters</h4><p>An integration plan makes the interfaces explicit, giving the team a shared reference for connecting sensing and onboard compute.</p></div>
+              <div class="chips" aria-label="Technologies"><span>Systems design</span><span>Autonomy</span><span>Embedded</span></div>
+            </div>
+          </article>
+          <article class="project" aria-labelledby="mos-title">
+            <div class="diagram-visual mos-visual">
+              <div class="visual-label"><span>03 / Device research</span><span>In progress</span></div>
+              <div class="mos-diagram" role="img" aria-label="Conceptual MOS capacitor cross-section showing metal, oxide, and semiconductor layers.">
+                <div class="mos-layer metal"><span>M</span><span>Metal</span></div>
+                <div class="mos-layer oxide"><span>O</span><span>Oxide</span></div>
+                <div class="mos-layer silicon"><span>S</span><span>Semiconductor</span></div>
+              </div>
+              <p class="visual-caption">MOS capacitor cross-section <span>Concept diagram</span></p>
+            </div>
+            <div class="project-copy">
+              <h3 id="mos-title">MOS Capacitor Research</h3>
+              <p class="eyebrow">Micro Systems Technology Group · Sept 2026–present</p>
+              <p>I’m working on a MOS capacitor in Cal Poly’s MicroFabrication Laboratory and developing a mathematical model of its capacitance-voltage relationship.</p>
+              <div class="project-impact"><h4>Why it matters</h4><p>The model will provide a benchmark for measured device behavior once physical testing begins, connecting semiconductor theory to lab results.</p></div>
+              <div class="chips" aria-label="Technologies"><span>Semiconductors</span><span>C–V modeling</span><span>Research</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section id="about" class="about" aria-labelledby="about-title">
+        <div><h2 id="about-title">About</h2></div>
+        <div class="about-copy"><p>I’m a first-year electrical engineering student at Cal Poly San Luis Obispo (B.S. expected May 2030). Before college, I founded and captained an FTC robotics team for three years and taught coding to kids.</p><p class="toolkit"><strong>My toolkit</strong> Altium Designer, LTspice, Fusion 360 (certified), Python, Arduino C++, Java, and bench instruments.</p><a class="text-link" href="https://linkedin.com/in/neeraj-chandekar-82a1b1238" target="_blank" rel="noopener">More on LinkedIn <span aria-hidden="true">↗</span></a></div>
+      </section>
+      <section class="contact" aria-labelledby="contact-title"><h2 id="contact-title">Contact</h2><a href="mailto:nchandek@calpoly.edu">nchandek@calpoly.edu <span aria-hidden="true">↗</span></a></section>
+    </main>
+    <footer><span>© <span id="yr">2026</span> Neeraj Chandekar</span><div><a href="https://github.com/Neeraj-C08" target="_blank" rel="noopener">GitHub ↗</a><a href="https://linkedin.com/in/neeraj-chandekar-82a1b1238" target="_blank" rel="noopener">LinkedIn ↗</a><a href="#">Back to top ↑</a></div></footer>
+  </div>
+  <script>
+    // Each carousel manages its own slides, controls, and keyboard navigation.
+    document.querySelectorAll('[data-carousel]').forEach(carousel => {
+      const slides = [...carousel.querySelectorAll('.carousel-slide')];
+      if (slides.length < 2) return;
+      let current = 0;
+      const controls = document.createElement('div');
+      controls.className = 'carousel-controls';
+      const previous = document.createElement('button');
+      previous.type = 'button';
+      previous.textContent = '←';
+      previous.setAttribute('aria-label', 'Previous image');
+      const next = document.createElement('button');
+      next.type = 'button';
+      next.textContent = '→';
+      next.setAttribute('aria-label', 'Next image');
+      const status = document.createElement('span');
+      status.className = 'carousel-status';
+      status.setAttribute('aria-live', 'polite');
+      status.setAttribute('aria-atomic', 'true');
+      const dots = document.createElement('div');
+      dots.className = 'carousel-dots';
+      dots.setAttribute('role', 'group');
+      dots.setAttribute('aria-label', 'Choose image');
+      const selectors = slides.map((slide, index) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `Show image ${index + 1}: ${slide.querySelector('figcaption').firstChild.textContent.trim()}`);
+        dot.addEventListener('click', () => show(index));
+        dots.append(dot);
+        return dot;
+      });
+      function show(index) {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) => { slide.hidden = i !== current; });
+        selectors.forEach((dot, i) => dot.setAttribute('aria-current', String(i === current)));
+        status.textContent = `${current + 1} / ${slides.length}`;
+      }
+      previous.addEventListener('click', () => show(current - 1));
+      next.addEventListener('click', () => show(current + 1));
+      carousel.addEventListener('keydown', event => {
+        if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault();
+          show(current + (event.key === 'ArrowRight' ? 1 : -1));
+        }
+      });
+      controls.append(previous, dots, status, next);
+      carousel.append(controls);
+      carousel.classList.add('is-ready');
+      show(0);
+    });
+    document.getElementById('yr').textContent = new Date().getFullYear();
+    const themeButton = document.getElementById('theme');
+    const themePreference = matchMedia('(prefers-color-scheme: dark)');
+    let chosenTheme;
+    try { chosenTheme = localStorage.getItem('portfolio-theme'); } catch {}
+    function updateTheme() {
+      const dark = chosenTheme ? chosenTheme === 'dark' : themePreference.matches;
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      themeButton.setAttribute('aria-label', `Switch to ${dark ? 'light' : 'dark'} theme`);
+    }
+    updateTheme();
+    themePreference.addEventListener('change', updateTheme);
+    themeButton.addEventListener('click', () => {
+      chosenTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem('portfolio-theme', chosenTheme); } catch {}
+      updateTheme();
+    });
+  </script>
 </body>
 </html>
