@@ -36,9 +36,9 @@ nav { min-height: 96px; display: flex; align-items: center; gap: 32px; border-bo
 .intro { padding: 48px 0; display: grid; grid-template-columns: minmax(0, 1fr) 280px; align-items: center; gap: 64px; }
 .intro-copy > p:not(.eyebrow) { max-width: 515px; color: var(--muted); margin-bottom: 24px; font-size: 17px; }
 .intro-copy .text-link { display: inline-block; }
-.portrait { aspect-ratio: 4 / 5; overflow: hidden; background: var(--surface); border-radius: 3px; }
+.portrait { aspect-ratio: 4 / 5; overflow: hidden; background: var(--surface); border-radius: 16px; }
 .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 47% 25%; }
-.eyebrow, .visual-label, .section-heading > span, .visual-caption, .chips, .project-impact h4, .protocol, .system-node small { font-family: "Consolas", "Courier New", monospace; }
+.eyebrow, .visual-label, .chips, .project-impact h4, .protocol, .system-node small { font-family: "Consolas", "Courier New", monospace; }
 .eyebrow { margin: 0 0 20px; color: var(--accent); text-transform: uppercase; letter-spacing: 1.6px; font-size: 11px; line-height: 1.7; }
 h1, h2, h3, p { margin-top: 0; }
 h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(54px, 6.5vw, 88px); line-height: 1.04; letter-spacing: -3.5px; font-weight: 400; margin-bottom: 24px; }
@@ -46,9 +46,8 @@ h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(54px, 6.5v
 .text-link span { margin-left: 28px; }
 .section-heading { display: flex; justify-content: space-between; align-items: center; padding: 23px 0; border-top: 1px solid var(--line); }
 .section-heading h2 { font-size: 16px; font-weight: 600; margin: 0; }
-.section-heading > span { font-size: 11px; color: var(--muted); }
 .project-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
-.project { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); width: 100%; min-width: 0; border: 1px solid var(--line); }
+.project { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); width: 100%; min-width: 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
 .project > * { min-width: 0; }
 .board-visual { background: var(--board); padding: 25px 28px 20px; display: flex; flex-direction: column; justify-content: space-between; }
 .visual-label { display: flex; justify-content: space-between; gap: 12px; font-size: 10px; text-transform: uppercase; letter-spacing: .5px; }
@@ -58,16 +57,13 @@ h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(54px, 6.5v
 .carousel.is-ready .carousel-slide { margin-bottom: 0; }
 .carousel-slide > a { display: flex; align-items: center; justify-content: center; aspect-ratio: 1; padding: 12px; }
 .carousel-slide img { width: 100%; height: 100%; object-fit: contain; }
-.carousel-slide figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; margin-top: 16px; font: 11px/1.6 "Consolas", "Courier New", monospace; color: var(--muted); }
 .carousel-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 16px; }
-.carousel-controls button { width: 44px; height: 44px; padding: 0; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); background: var(--bg); }
+.carousel-controls button { width: 32px; height: 32px; padding: 0; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); background: var(--bg); }
 .carousel-controls button:hover { border-color: var(--accent); }
 .carousel-dots { display: flex; }
 .carousel-dots button { display: grid; place-items: center; width: 32px; border: 0; background: transparent; border-radius: 4px; }
 .carousel-dots button::after { content: ""; width: 7px; height: 7px; border: 1px solid var(--accent); border-radius: 50%; }
 .carousel-dots button[aria-current="true"]::after { background: var(--accent); }
-.carousel-status { color: var(--muted); font: 11px/1.6 "Consolas", "Courier New", monospace; min-width: 36px; text-align: center; }
-.visual-caption { display: flex; justify-content: space-between; gap: 12px; font-size: 10px; margin: 0; color: var(--muted); }
 .project-copy { padding: 34px; }
 .project-copy .eyebrow { font-size: 10px; letter-spacing: .6px; margin-bottom: 17px; }
 .project h3 { font-family: Georgia, "Times New Roman", serif; font-size: 35px; font-weight: 400; line-height: 1.13; letter-spacing: -.9px; margin-bottom: 17px; }
@@ -77,9 +73,8 @@ h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(54px, 6.5v
 .project-impact p { font-size: 13px; }
 .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 24px; }
 .chips span { border: 1px solid var(--line); border-radius: 3px; padding: 3px 9px; color: var(--muted); font-size: 10px; }
-.diagram-visual { min-height: 290px; padding: 22px 25px 18px; display: grid; grid-template-rows: auto 1fr auto; align-items: center; }
+.diagram-visual { min-height: 290px; padding: 22px 25px 18px; display: grid; grid-template-rows: auto 1fr; align-items: center; }
 .autonomy-visual { background: #233d33; color: #edf0e4; }
-.autonomy-visual .visual-caption { color: #becbc0; }
 .system-diagram { width: 100%; max-width: 430px; margin: 25px auto; text-align: center; }
 .system-node { display: block; border: 1px solid #779582; padding: 10px 4px; font-size: 11px; background: #2e493d; }
 .compute { width: 63%; margin: 0 auto; font-size: 14px; position: relative; }
@@ -117,7 +112,6 @@ footer a { text-decoration: none; }
   .board-visual { padding: 22px; }
   .project-list { gap: 20px; }
   .diagram-visual { padding: 20px 16px; }
-  .visual-caption { flex-wrap: wrap; gap: 2px 12px; }
   .about { gap: 35px; }
   .contact > a { font-size: 15px; }
 }

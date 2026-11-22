@@ -13,7 +13,7 @@
   <div class="wrap">
     <nav aria-label="Main navigation">
       <a class="wordmark" href="#">NC<span aria-hidden="true">.</span></a>
-      <div class="nav-links"><a href="#projects">Selected work</a><a href="#about">About</a><a href="mailto:nchandek@calpoly.edu">Get in touch <span aria-hidden="true">↗</span></a></div>
+      <div class="nav-links"><a href="#projects">Selected work</a><a href="#about">About</a></div>
       <button id="theme" type="button" aria-label="Toggle light or dark theme">Theme <span aria-hidden="true">◐</span></button>
     </nav>
     <main id="main">
@@ -27,22 +27,20 @@
         <div class="portrait"><img src="images/IMG_0150.JPG" alt="Neeraj Chandekar" width="1067" height="1600" fetchpriority="high"></div>
       </header>
       <section id="projects" aria-labelledby="work-title">
-        <div class="section-heading"><h2 id="work-title">Selected work</h2><span>01 — 03 / 2026</span></div>
+        <div class="section-heading"><h2 id="work-title">Selected work</h2></div>
         <!-- Add future projects as .project articles in this list to keep their widths consistent. -->
         <div class="project-list">
         <article class="project" aria-labelledby="fan-title">
           <div class="board-visual">
-            <div class="visual-label"><span>01 / Circuit design</span><span>Altium Designer</span></div>
+            <div class="visual-label"><span>01 / Circuit design</span></div>
             <!-- Add image figures here; carousel controls are generated automatically. -->
             <div class="carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Cooling Fan Control Breakout Board images">
               <div class="carousel-stage">
                 <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="1 of 2: PCB layout">
                   <a href="images/Screenshot%202026-11-11%20212728.png" target="_blank" rel="noopener" aria-label="Open full-size PCB layout in a new tab"><img src="images/Screenshot%202026-11-11%20212728.png" alt="Cooling fan breakout PCB layout showing routed traces, connectors, and mounting holes" width="736" height="736"></a>
-                  <figcaption>PCB layout <span>↗ View full size</span></figcaption>
                 </figure>
                 <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="2 of 2: Schematic">
                   <a href="images/Screenshot%202026-11-11%20212849.png" target="_blank" rel="noopener" aria-label="Open full-size schematic in a new tab"><img src="images/Screenshot%202026-11-11%20212849.png" alt="Cooling fan signal-conditioning schematic with op-amps, filter components, and fan connectors" width="1020" height="807" loading="lazy"></a>
-                  <figcaption>Schematic <span>↗ View full size</span></figcaption>
                 </figure>
               </div>
             </div>
@@ -57,7 +55,7 @@
         </article>
           <article class="project" aria-labelledby="autonomy-title">
             <div class="diagram-visual autonomy-visual">
-              <div class="visual-label"><span>02 / Systems integration</span><span>In progress</span></div>
+              <div class="visual-label"><span>02 / Systems integration</span></div>
               <div class="system-diagram" role="img" aria-label="Planned vehicle connections: three RGB cameras via GMSL2, Ouster LiDAR via 10G Ethernet, and the vehicle bus via CAN 2.0B, connected to NVIDIA Jetson AGX Orin compute.">
                 <div class="system-node compute"><small>COMPUTE</small>NVIDIA Jetson AGX Orin</div>
                 <div class="system-branches">
@@ -66,7 +64,6 @@
                   <div><span class="protocol">CAN 2.0B</span><span class="system-node">Vehicle bus</span></div>
                 </div>
               </div>
-              <p class="visual-caption">System overview <span>Concept diagram</span></p>
             </div>
             <div class="project-copy">
               <h3 id="autonomy-title">Autonomy Electronics Integration Plan</h3>
@@ -78,13 +75,12 @@
           </article>
           <article class="project" aria-labelledby="mos-title">
             <div class="diagram-visual mos-visual">
-              <div class="visual-label"><span>03 / Device research</span><span>In progress</span></div>
+              <div class="visual-label"><span>03 / Device research</span></div>
               <div class="mos-diagram" role="img" aria-label="Conceptual MOS capacitor cross-section showing metal, oxide, and semiconductor layers.">
                 <div class="mos-layer metal"><span>M</span><span>Metal</span></div>
                 <div class="mos-layer oxide"><span>O</span><span>Oxide</span></div>
                 <div class="mos-layer silicon"><span>S</span><span>Semiconductor</span></div>
               </div>
-              <p class="visual-caption">MOS capacitor cross-section <span>Concept diagram</span></p>
             </div>
             <div class="project-copy">
               <h3 id="mos-title">MOS Capacitor Research</h3>
@@ -120,10 +116,6 @@
       next.type = 'button';
       next.textContent = '→';
       next.setAttribute('aria-label', 'Next image');
-      const status = document.createElement('span');
-      status.className = 'carousel-status';
-      status.setAttribute('aria-live', 'polite');
-      status.setAttribute('aria-atomic', 'true');
       const dots = document.createElement('div');
       dots.className = 'carousel-dots';
       dots.setAttribute('role', 'group');
@@ -131,7 +123,7 @@
       const selectors = slides.map((slide, index) => {
         const dot = document.createElement('button');
         dot.type = 'button';
-        dot.setAttribute('aria-label', `Show image ${index + 1}: ${slide.querySelector('figcaption').firstChild.textContent.trim()}`);
+        dot.setAttribute('aria-label', `Show image ${slide.getAttribute('aria-label')}`);
         dot.addEventListener('click', () => show(index));
         dots.append(dot);
         return dot;
@@ -140,7 +132,6 @@
         current = (index + slides.length) % slides.length;
         slides.forEach((slide, i) => { slide.hidden = i !== current; });
         selectors.forEach((dot, i) => dot.setAttribute('aria-current', String(i === current)));
-        status.textContent = `${current + 1} / ${slides.length}`;
       }
       previous.addEventListener('click', () => show(current - 1));
       next.addEventListener('click', () => show(current + 1));
@@ -151,7 +142,7 @@
           show(current + (event.key === 'ArrowRight' ? 1 : -1));
         }
       });
-      controls.append(previous, dots, status, next);
+      controls.append(previous, dots, next);
       carousel.append(controls);
       carousel.classList.add('is-ready');
       show(0);
