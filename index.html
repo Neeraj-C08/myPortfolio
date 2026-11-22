@@ -9,7 +9,7 @@
 <body>
 <div class="wrap">
 <nav aria-label="Sections">
-  <a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#about">About</a>
+  <a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#about">About</a>
   <button id="theme" type="button" aria-label="Toggle light or dark theme">Theme</button>
 </nav>
 
@@ -28,17 +28,13 @@
 <!-- ================= PROJECTS: add new ones to this list =================
 Copy one block, paste it at the TOP of the list, and edit. Fields:
   title, org (lab/club/class), date (text), tags (list), summary (one line),
-  bullets (list), links (optional: [{label, url}]), image (optional: URL of a picture)
+  bullets (list), links (optional: [{label, url}]),
+  images (optional: [{src, caption}] — put picture files in the images/ folder, e.g. src: "images/my-pic.png")
 -->
 <section id="projects">
   <h2>Projects</h2>
   <div class="filters" id="filters"></div>
   <div id="projectList"></div>
-</section>
-
-<section id="experience">
-  <h2>Experience</h2>
-  <div id="expList"></div>
 </section>
 
 <section id="skills" class="skills">
@@ -49,11 +45,9 @@ Copy one block, paste it at the TOP of the list, and edit. Fields:
 <section id="about">
   <h2>About</h2>
   <div id="aboutText"></div>
-  <h2 style="margin-top:34px">Honors and awards</h2>
-  <ul class="awards" id="awardList"></ul>
 </section>
 
-<footer>© <span id="yr"></span> Neeraj Chandekar. Built with plain HTML.</footer>
+<footer>© <span id="yr"></span> Neeraj Chandekar</footer>
 </div>
 
 <script>
@@ -83,7 +77,10 @@ const PROJECTS = [
       "Verified the signal filtering at 100 kHz in LTspice using a Bode plot."
     ],
     links: [],
-    image: ""
+    images: [
+      {src: "images/Screenshot 2026-11-11 212728.png", caption: "PCB layout (Altium Designer)"},
+      {src: "images/Screenshot 2026-11-11 212849.png", caption: "Schematic"}
+    ]
   },
   {
     title: "MOS Capacitor Research",
@@ -95,7 +92,7 @@ const PROJECTS = [
       "Developing a mathematical model of the capacitance-voltage (C-V) relationship to benchmark against measurements once physical testing begins."
     ],
     links: [],
-    image: ""
+    images: []
   },
   {
     title: "Autonomy Electronics Integration Plan",
@@ -108,25 +105,9 @@ const PROJECTS = [
       "Produced a complete block diagram and documented all interconnects and protocols: GMSL2 camera links, a 10G Ethernet LiDAR interface, and a CAN 2.0B vehicle bus."
     ],
     links: [],
-    image: ""
+    images: []
   }
   // ← paste new projects above this line
-];
-
-const EXPERIENCE = [
-  {role: "Head of Outreach / Developer", org: "ThrAIve AI", date: "Oct 2024 – May 2026", bullets: [
-    "Connected with 5–10 nonprofits each year to host educational webinars on AI safety.",
-    "Helped build a Flask flier-generation web app for outreach and fundraising for HART of Folsom, a local homeless assistance service."]},
-  {role: "Code Coach", org: "theCoderSchool Folsom", date: "June 2025 – Feb 2026", bullets: [
-    "Guided 10–15 students weekly through Python, JavaScript, and Scratch projects.",
-    "Tracked individual progress and delivered detailed project reviews."]},
-  {role: "Founder and Captain", org: "Reboot FTC Robotics Team", date: "Sept 2022 – Sept 2025", bullets: [
-    "Led hardware and software integration: sensors, encoders, and control software for autonomous operation.",
-    "Designed, programmed (Java), and built a competition robot each season. Earned the Inspire Award and a Finalist Alliance selection.",
-    "Secured $6,000+ in sponsorships and grants and launched a mentorship program for younger students."]},
-  {role: "User Interface Intern", org: "ActivityBees", date: "June 2023 – Aug 2023", bullets: [
-    "Reviewed a startup app’s UI and documented key improvements for the lead developer.",
-    "Implemented UI changes under mentorship."]}
 ];
 
 const SKILLS = {
@@ -135,42 +116,36 @@ const SKILLS = {
   "Lab equipment": "Multimeter, oscilloscope, function generator"
 };
 
-const AWARDS = [
-  "AP Scholar with Distinction",
-  "Finalist Alliance and Inspire Award (highest honor), FTC CA Northeast League Championship, 2025",
-  "Think Award, FTC CA Northeast League Championship, 2024",
-  "Bronze Medalist, SkillsUSA CA Cybersecurity Competition, 2025"
-];
 /* =================== END EDITABLE SECTION =================== */
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const safeUrl = u => /^https?:\/\//.test(u) ? u : "#";
+const safeUrl = u => /^(https?:\/\/|images\/)/.test(u) ? u : "#";
 
 $("contact").innerHTML =
   `<a href="mailto:${esc(PROFILE.email)}">${esc(PROFILE.email)}</a>` +
   PROFILE.links.map(l => `<a href="${safeUrl(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join("");
 $("aboutText").innerHTML = PROFILE.about.map(p => `<p>${esc(p)}</p>`).join("");
 $("skillList").innerHTML = Object.entries(SKILLS).map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
-$("awardList").innerHTML = AWARDS.map(a => `<li>${esc(a)}</li>`).join("");
-$("expList").innerHTML = EXPERIENCE.map(e => `
-  <article class="job"><div class="meta">${esc(e.date)}</div><div>
-  <h3>${esc(e.role)}</h3><p class="org">${esc(e.org)}</p>
-  <ul>${e.bullets.map(b => `<li>${esc(b)}</li>`).join("")}</ul></div></article>`).join("");
 $("yr").textContent = new Date().getFullYear();
 
 let active = "All";
 function renderProjects() {
   const list = PROJECTS.filter(p => active === "All" || p.tags.includes(active));
   $("projectList").innerHTML = list.map(p => `
-    <article class="project"><div class="meta">${esc(p.date)}</div><div>
-    <h3>${esc(p.title)}</h3><p class="org">${esc(p.org)}</p>
-    <p style="margin:0">${esc(p.summary)}</p>
-    <ul>${p.bullets.map(b => `<li>${esc(b)}</li>`).join("")}</ul>
-    ${p.image ? `<img src="${safeUrl(p.image)}" alt="${esc(p.title)}">` : ""}
-    <div class="chips">${p.tags.map(t => `<span>${esc(t)}</span>`).join("")}</div>
-    ${(p.links || []).length ? `<p style="margin:12px 0 0">${p.links.map(l => `<a href="${safeUrl(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join(" &nbsp; ")}</p>` : ""}
-    </div></article>`).join("");
+    <article class="project">
+      <div class="head">
+        <div><h3>${esc(p.title)}</h3><p class="org">${esc(p.org)}</p></div>
+        <div class="meta">${esc(p.date)}</div>
+      </div>
+      <p class="summary">${esc(p.summary)}</p>
+      <ul>${p.bullets.map(b => `<li>${esc(b)}</li>`).join("")}</ul>
+      ${(p.images || []).length ? `<div class="gallery">${p.images.map(i => `
+        <figure><a href="${safeUrl(i.src)}" target="_blank" rel="noopener"><img src="${safeUrl(i.src)}" alt="${esc(i.caption || p.title)}" loading="lazy"></a>
+        <figcaption>${esc(i.caption || "")}</figcaption></figure>`).join("")}</div>` : ""}
+      <div class="chips">${p.tags.map(t => `<span>${esc(t)}</span>`).join("")}</div>
+      ${(p.links || []).length ? `<p class="plinks">${p.links.map(l => `<a href="${safeUrl(l.url)}" target="_blank" rel="noopener">${esc(l.label)} →</a>`).join("")}</p>` : ""}
+    </article>`).join("");
 }
 function renderFilters() {
   const tags = ["All", ...new Set(PROJECTS.flatMap(p => p.tags))];
