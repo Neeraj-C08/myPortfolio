@@ -31,7 +31,7 @@ nav { min-height: 96px; display: flex; align-items: center; gap: 32px; border-bo
 .wordmark { font-size: 28px; font-weight: 750; letter-spacing: -2px; text-decoration: none; }
 .wordmark span { color: var(--accent); }
 .nav-links { display: flex; gap: 32px; margin-left: auto; }
-.nav-links a { text-decoration: none; font-size: 14px; }
+.nav-links a { text-decoration: none; font-size: 14px; font-weight: 600; }
 #theme { display: flex; align-items: center; gap: 9px; background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: 24px; padding: 5px 13px; font-size: 12px; }
 .intro { padding: 48px 0; display: grid; grid-template-columns: minmax(0, 1fr) 280px; align-items: center; gap: 64px; }
 .intro-copy > p:not(.eyebrow) { max-width: 515px; color: var(--muted); margin-bottom: 24px; font-size: 17px; }
@@ -121,7 +121,7 @@ footer a { text-decoration: none; }
   .wrap { padding: 0 20px; }
   nav { min-height: 80px; gap: 15px; flex-wrap: wrap; padding: 16px 0; }
   .wordmark { margin-right: auto; }
-  .nav-links { order: 3; width: 100%; justify-content: space-between; gap: 12px; }
+  .nav-links { gap: 20px; }
   .nav-links a { font-size: 12px; }
   .intro { padding: 32px 0; grid-template-columns: minmax(0, 1fr) 110px; gap: 16px; align-items: start; }
   .intro .eyebrow { font-size: 9px; letter-spacing: 1px; }
