@@ -20,7 +20,7 @@
         <div class="intro-copy">
           <p class="eyebrow">Electrical engineering / Cal Poly San Luis Obispo</p>
           <h1>Neeraj<br>Chandekar</h1>
-          <p>I’m an electrical engineering student working on circuit boards, autonomous vehicle electronics, and semiconductor devices.</p>
+          <p>I’m an EE student at Cal Poly SLO working on PCB Design, Power Electronics, and Semiconductors.</p>
         </div>
         <div class="portrait"><img src="images/IMG_0150.JPG" alt="Neeraj Chandekar" width="903" height="1600" fetchpriority="high"></div>
       </header>
@@ -28,9 +28,53 @@
         <div class="section-heading"><h2 id="work-title">Selected work</h2></div>
         <!-- Add future projects as .project articles in this list to keep their widths consistent. -->
         <div class="project-list">
+          <article class="project" aria-labelledby="timer-title">
+            <div class="board-visual">
+              <div class="visual-label"><span>01 / Circuit design</span></div>
+              <div class="carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="555 Timer Board images">
+                <div class="carousel-stage">
+                  <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="1 of 2: PCB layout">
+                    <a href="images/555board.png" target="_blank" rel="noopener" aria-label="Open full-size 555 timer PCB layout in a new tab"><img src="images/555board.png" alt="555 timer PCB layout with the timer IC, adjustable resistor, LED, and mounting holes" width="578" height="441" loading="lazy"></a>
+                  </figure>
+                  <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="2 of 2: Schematic">
+                    <a href="images/555schematic.png" target="_blank" rel="noopener" aria-label="Open full-size 555 timer schematic in a new tab"><img src="images/555schematic.png" alt="555 timer schematic showing a 5 V supply, adjustable timing network, and LED output" width="982" height="487" loading="lazy"></a>
+                  </figure>
+                </div>
+              </div>
+            </div>
+            <div class="project-copy">
+              <h3 id="timer-title">555 Timer Board</h3>
+              <p class="eyebrow">Personal project</p>
+              <p>I designed a 555 timer PCB in KiCad as a personal project and soldered the board. The circuit pairs adjustable timing with an LED output, bringing the timer, timing components, and power connection into one layout.</p>
+              <div class="project-impact"><h4>Why it matters</h4><p>This project gave me practice taking a circuit from schematic and PCB layout through hands-on soldering, with an LED that makes the timer’s output visible.</p></div>
+              <div class="chips" aria-label="Technologies"><span>KiCad</span><span>PCB design</span><span>Soldering</span><span>555 timer</span></div>
+            </div>
+          </article>
+          <article class="project" aria-labelledby="led-title">
+            <div class="board-visual">
+              <div class="visual-label"><span>02 / Vehicle electronics</span></div>
+              <div class="carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Vehicle State LED PCB images">
+                <div class="carousel-stage">
+                  <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="1 of 2: PCB layout">
+                    <a href="images/ledPCB-cutout.png" target="_blank" rel="noopener" aria-label="Open full-size vehicle state LED PCB layout in a new tab"><img src="images/ledPCB-cutout.png" alt="LED PCB layout with separate low-voltage, autonomy, and high-voltage indicator channels" width="842" height="651" loading="lazy"></a>
+                  </figure>
+                  <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="2 of 2: Schematic">
+                    <a href="images/ledSchematic.png" target="_blank" rel="noopener" aria-label="Open full-size LED driver schematic in a new tab"><img src="images/ledSchematic.png" alt="Vehicle indicator schematic showing an LED driver, input protection, and a string of five LEDs" width="1243" height="596" loading="lazy"></a>
+                  </figure>
+                </div>
+              </div>
+            </div>
+            <div class="project-copy">
+              <h3 id="led-title">Vehicle State LED PCB</h3>
+              <p class="eyebrow">Cal Poly Prototype Vehicles Laboratory (PROVE Lab)</p>
+              <p>I designed an LED PCB in Altium to communicate the car’s three high-level vehicle states. The layout separates the low-voltage, autonomy, and high-voltage indicators into three channels.</p>
+              <div class="project-impact"><h4>Why it matters</h4><p>The design objective is to make the indicators visible in broad daylight to anybody near the car, helping people recognize its state for safety.</p></div>
+              <div class="chips" aria-label="Technologies"><span>PCB design</span><span>Altium</span><span>LED drivers</span></div>
+            </div>
+          </article>
         <article class="project" aria-labelledby="fan-title">
           <div class="board-visual">
-            <div class="visual-label"><span>01 / Circuit design</span></div>
+            <div class="visual-label"><span>03 / Circuit design</span></div>
             <!-- Add image figures here; carousel controls are generated automatically. -->
             <div class="carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Cooling Fan Control Breakout Board images">
               <div class="carousel-stage">
@@ -53,15 +97,10 @@
         </article>
           <article class="project" aria-labelledby="autonomy-title">
             <div class="diagram-visual autonomy-visual">
-              <div class="visual-label"><span>02 / Systems integration</span></div>
-              <div class="system-diagram" role="img" aria-label="Planned vehicle connections: three RGB cameras via GMSL2, Ouster LiDAR via 10G Ethernet, and the vehicle bus via CAN 2.0B, connected to NVIDIA Jetson AGX Orin compute.">
-                <div class="system-node compute"><small>COMPUTE</small>NVIDIA Jetson AGX Orin</div>
-                <div class="system-branches">
-                  <div><span class="protocol">GMSL2</span><span class="system-node">3 × RGB cameras</span></div>
-                  <div><span class="protocol">10G Ethernet</span><span class="system-node">Ouster LiDAR</span></div>
-                  <div><span class="protocol">CAN 2.0B</span><span class="system-node">Vehicle bus</span></div>
-                </div>
-              </div>
+              <div class="visual-label"><span>04 / Systems integration</span></div>
+              <a class="system-diagram" href="images/Screenshot%202026-11-26%20122800.png" target="_blank" rel="noopener" aria-label="Open full-size autonomy integration block diagram in a new tab">
+                <img src="images/Screenshot%202026-11-26%20122800.png" alt="Autonomy integration block diagram showing three cameras connected to compute over GMSL2 coaxial links, a LiDAR interface over 10G Ethernet, CAN bus connections, and 24 V power distribution" width="871" height="648" loading="lazy">
+              </a>
             </div>
             <div class="project-copy">
               <h3 id="autonomy-title">Autonomy Electronics Integration Plan</h3>
@@ -73,7 +112,7 @@
           </article>
           <article class="project" aria-labelledby="mos-title">
             <div class="diagram-visual mos-visual">
-              <div class="visual-label"><span>03 / Device research</span></div>
+              <div class="visual-label"><span>05 / Device research</span></div>
               <div class="mos-diagram" role="img" aria-label="Conceptual MOS capacitor cross-section showing metal, oxide, and semiconductor layers.">
                 <div class="mos-layer metal"><span>M</span><span>Metal</span></div>
                 <div class="mos-layer oxide"><span>O</span><span>Oxide</span></div>
@@ -93,7 +132,7 @@
       <section id="about" class="about" aria-labelledby="about-title">
         <h2 id="about-title">About Me</h2>
         <div class="about-photo"><img src="images/IMG_6834.jpg" alt="Neeraj Chandekar standing in front of green hills and tea fields" width="4284" height="5712" loading="lazy"></div>
-        <div class="about-copy"><p>I’m a first-year electrical engineering student at Cal Poly San Luis Obispo (B.S. expected May 2030). Before college, I founded and captained an FTC robotics team for three years and taught coding to kids.</p><p class="toolkit"><strong>My toolkit</strong> Altium Designer, LTspice, Fusion 360 (certified), Python, Arduino C++, Java, and bench instruments.</p><a class="text-link" href="https://linkedin.com/in/neeraj-chandekar-82a1b1238" target="_blank" rel="noopener">More on LinkedIn</a></div>
+        <div class="about-copy"><p>I’m a college sophomore who values fast-moving teams where I can learn from experienced engineers and take on real design problems. In high school, FTC robotics sparked my passion for the iterative design process and I'm eager to bring those skills to industry.  </p><p class="toolkit"><strong>My toolkit</strong> Altium Designer, KiCad, LTspice, Fusion 360 (certified), Python, Arduino C++, Java, and bench instruments.</p><a class="text-link" href="https://linkedin.com/in/neeraj-chandekar-82a1b1238" target="_blank" rel="noopener">More on LinkedIn</a></div>
       </section>
       <section class="contact" aria-labelledby="contact-title"><h2 id="contact-title">Contact</h2><a href="mailto:nchandek@calpoly.edu">nchandek@calpoly.edu</a></section>
     </main>
